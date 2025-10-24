@@ -4549,7 +4549,14 @@ ElementsTable.Paragraph = (function()
 	function Paragraph:New(Config)
 		Config.Content = Config.Content or ""
 
-		local Paragraph = Components.Element(Config.Title, Config.Content, Config.RichText, Paragraph.Container, false, Config)
+		local Paragraph = Components.Element(
+            Config.Title,
+            Config.Content,
+            (Config.RichText == true),
+            Paragraph.Container,
+            false,
+            Config
+        )
 		Paragraph.Frame.BackgroundTransparency = 0.92
 		Paragraph.Border.Transparency = 0.6
 
