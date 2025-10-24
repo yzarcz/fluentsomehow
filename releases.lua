@@ -1768,7 +1768,7 @@ Components.Element = (function()
 
 	local Spring = Flipper.Spring.new
 
-	return function(Title, Desc, Parent, Hover, Options)
+	return function(Title, Desc, RichText, Parent, Hover, Options)
 		local Element = {}
 		local Options = Options or {}
 
@@ -1825,6 +1825,7 @@ Components.Element = (function()
 		Element.DescLabel = New("TextLabel", {
 			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
 			Text = Desc,
+            RichText = Options.RichText == true,
 			TextColor3 = Color3.fromRGB(200, 200, 200),
 			TextSize = 12,
 			TextWrapped = true,
