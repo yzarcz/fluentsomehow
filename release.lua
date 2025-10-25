@@ -4571,6 +4571,8 @@ ElementsTable.Divider = (function()
 	function Element:New()
 		local Divider = {}
 		
+		local layoutOrder = #self.Container:GetChildren()
+		
 		local InnerFrame = New("Frame", {
 			Size = UDim2.new(1, 0, 0, 1),
 			BackgroundTransparency = 1,
@@ -4590,7 +4592,7 @@ ElementsTable.Divider = (function()
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
 			Parent = self.Container,
-			LayoutOrder = 100,
+			LayoutOrder = layoutOrder,
 		}, {
 			New("UIListLayout", {
 				SortOrder = Enum.SortOrder.LayoutOrder,
