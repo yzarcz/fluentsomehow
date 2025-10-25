@@ -4590,6 +4590,7 @@ ElementsTable.Divider = (function()
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
 			Parent = self.Container,
+			LayoutOrder = 100,
 		}, {
 			New("UIListLayout", {
 				SortOrder = Enum.SortOrder.LayoutOrder,
