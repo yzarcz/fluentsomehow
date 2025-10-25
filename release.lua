@@ -4567,10 +4567,10 @@ ElementsTable.Divider = (function()
 	local Element = {}
 	Element.__index = Element
 	Element.__type = "Divider"
-
+	
 	function Element:New()
 		local Divider = {}
-
+		
 		local InnerFrame = New("Frame", {
 			Size = UDim2.new(1, 0, 0, 1),
 			BackgroundTransparency = 1,
@@ -4584,13 +4584,12 @@ ElementsTable.Divider = (function()
 				},
 			})
 		})
-
+		
 		Divider.Frame = New("Frame", {
 			Size = UDim2.new(1, 0, 0, 13),
 			BackgroundTransparency = 1,
 			BorderSizePixel = 0,
-			Parent = Element.Container,
-			LayoutOrder = 6,
+			Parent = self.Container,
 		}, {
 			New("UIListLayout", {
 				SortOrder = Enum.SortOrder.LayoutOrder,
@@ -4602,14 +4601,14 @@ ElementsTable.Divider = (function()
 			}),
 			InnerFrame
 		})
-
+		
 		function Divider:Destroy()
 			Divider.Frame:Destroy()
 		end
-
+		
 		return Divider
 	end
-
+	
 	return Element
 end)()
 ElementsTable.Slider = (function()
