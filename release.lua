@@ -1764,12 +1764,18 @@ local Components = {
 
 Components.Element = (function()
 	local New = Creator.New
-
 	local Spring = Flipper.Spring.new
 
-	return function(Title, Desc, RichText, Parent, Hover, Options)
+	return function(Config)
+		Config = Config or {}
 		local Element = {}
-		local Options = Options or {}
+		
+		local Title = Config.Title or ""
+		local Desc = Config.Description or ""
+		local RichText = Config.RichText or false
+		local Parent = Config.Parent
+		local Hover = Config.Hover or false
+		local Options = Config.Options or Config
 
 		Element.TitleLabel = New("TextLabel", {
 			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal),
@@ -1801,22 +1807,27 @@ Components.Element = (function()
 
 		if Options and Options.Icon then
 			local iconImage = Options.Icon
-			pcall(function()
-				if Library and Library.GetIcon then
-					local resolved = Library:GetIcon(Options.Icon)
-					if resolved then iconImage = resolved end
-				end
-			end)
-			Element.IconImage = New("ImageLabel", {
-				Image = iconImage,
-				Size = UDim2.fromOffset(16, 16),
-				BackgroundTransparency = 1,
-				LayoutOrder = 1,
-				ThemeTag = {
-					ImageColor3 = "Text",
-				},
-			})
-			Element.IconImage.Parent = Element.Header
+			if not fischbypass then
+				pcall(function()
+					if Library and Library.GetIcon then
+						local resolved = Library:GetIcon(Options.Icon)
+						if resolved then iconImage = resolved end
+					end
+				end)
+			end
+			
+			if type(iconImage) == "string" and iconImage ~= "" then
+				Element.IconImage = New("ImageLabel", {
+					Image = iconImage,
+					Size = UDim2.fromOffset(16, 16),
+					BackgroundTransparency = 1,
+					LayoutOrder = 1,
+					ThemeTag = {
+						ImageColor3 = "Text",
+					},
+				})
+				Element.IconImage.Parent = Element.Header
+			end
 		end
 
 		Element.TitleLabel.Parent = Element.Header
@@ -1824,7 +1835,7 @@ Components.Element = (function()
 		Element.DescLabel = New("TextLabel", {
 			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
 			Text = Desc,
-            RichText = Options.RichText == true,
+			RichText = RichText,
 			TextColor3 = Color3.fromRGB(200, 200, 200),
 			TextSize = 12,
 			TextWrapped = true,
