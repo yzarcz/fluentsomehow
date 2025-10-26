@@ -1390,7 +1390,6 @@ function Creator.New(Name, Properties, Children)
 	ApplyCustomProps(Object, Properties)
 	return Object
 end
-
 function Creator.SpringMotor(Initial, Instance, Prop, IgnoreDialogCheck, ResetOnThemeChange)
 	IgnoreDialogCheck = IgnoreDialogCheck or false
 	ResetOnThemeChange = ResetOnThemeChange or false
