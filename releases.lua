@@ -6085,6 +6085,7 @@ local Icons = {
 	["lucide-film"] = "rbxassetid://10723374981",
 	["lucide-filter"] = "rbxassetid://10723375128",
 	["lucide-fingerprint"] = "rbxassetid://10723375250",
+	["lucide=fish-symbol"] = "rbxassetid://114605049574643",
 	["lucide-flag"] = "rbxassetid://10723375890",
 	["lucide-flag-off"] = "rbxassetid://10723375443",
 	["lucide-flag-triangle-left"] = "rbxassetid://10723375608",
