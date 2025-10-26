@@ -1825,6 +1825,7 @@ Components.Element = (function()
 		Element.DescLabel = New("TextLabel", {
 			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
 			Text = Desc,
+			RichText = Options.RichText,
 			TextColor3 = Color3.fromRGB(200, 200, 200),
 			TextSize = 12,
 			TextWrapped = true,
@@ -3779,7 +3780,7 @@ ElementsTable.Button = (function()
 		assert(Config.Title, "Button - Missing Title")
 		Config.Callback = Config.Callback or function() end
 
-		local ButtonFrame = Components.Element(Config.Title, Config.Description, self.Container, true, Config)
+		local ButtonFrame = Components.Element(Config.Title, Config.Description, false, self.Container, true, Config)
 
 		local ButtonIco = New("ImageLabel", {
 			Image = "rbxassetid://10709791437",
@@ -3816,7 +3817,7 @@ ElementsTable.Toggle = (function()
 			Type = "Toggle",
 		}
 
-		local ToggleFrame = Components.Element(Config.Title, Config.Description, self.Container, true, Config)
+		local ToggleFrame = Components.Element(Config.Title, Config.Description, false, self.Container, true, Config)
 		ToggleFrame.DescLabel.Size = UDim2.new(1, -54, 0, 14)
 
 		Toggle.SetTitle = ToggleFrame.SetTitle
@@ -3927,7 +3928,7 @@ ElementsTable.Dropdown = (function()
 			Dropdown.Value = {}
 		end
 
-		local DropdownFrame = Components.Element(Config.Title, Config.Description, self.Container, false, Config)
+		local DropdownFrame = Components.Element(Config.Title, Config.Description, false, self.Container, false, Config)
 		DropdownFrame.DescLabel.Size = UDim2.new(1, -170, 0, 14)
 
 		Dropdown.SetTitle = DropdownFrame.SetTitle
@@ -4549,7 +4550,7 @@ ElementsTable.Paragraph = (function()
 	function Paragraph:New(Config)
 		Config.Content = Config.Content or ""
 
-		local Paragraph = Components.Element(Config.Title, Config.Content, Paragraph.Container, false, Config)
+		local Paragraph = Components.Element(Config.Title, Config.Content, Config.RichText, Paragraph.Container, false, Config)
 		Paragraph.Frame.BackgroundTransparency = 0.92
 		Paragraph.Border.Transparency = 0.6
 
@@ -4637,7 +4638,7 @@ ElementsTable.Slider = (function()
 
 		local Dragging = false
 
-		local SliderFrame = Components.Element(Config.Title, Config.Description, self.Container, false, Config)
+		local SliderFrame = Components.Element(Config.Title, Config.Description, false, self.Container, false, Config)
 		SliderFrame.DescLabel.Size = UDim2.new(1, -170, 0, 14)
 
 		Slider.Elements = SliderFrame
@@ -4965,7 +4966,7 @@ ElementsTable.Keybind = (function()
 
 		local Picking = false
 
-		local KeybindFrame = Components.Element(Config.Title, Config.Description, self.Container, true)
+		local KeybindFrame = Components.Element(Config.Title, Config.Description, false, self.Container, true)
 
 		Keybind.SetTitle = KeybindFrame.SetTitle
 		Keybind.SetDesc = KeybindFrame.SetDesc
@@ -5171,7 +5172,7 @@ ElementsTable.Colorpicker = (function()
 
 		Colorpicker:SetHSVFromRGB(Colorpicker.Value)
 
-		local ColorpickerFrame = Components.Element(Config.Title, Config.Description, self.Container, true)
+		local ColorpickerFrame = Components.Element(Config.Title, Config.Description, false, self.Container, true)
 
 		Colorpicker.SetTitle = ColorpickerFrame.SetTitle
 		Colorpicker.SetDesc = ColorpickerFrame.SetDesc
@@ -5667,7 +5668,7 @@ ElementsTable.Input = (function()
 			Type = "Input",
 		}
 
-		local InputFrame = Components.Element(Config.Title, Config.Description, self.Container, false)
+		local InputFrame = Components.Element(Config.Title, Config.Description, false, self.Container, false)
 
 		Input.SetTitle = InputFrame.SetTitle
 		Input.SetDesc = InputFrame.SetDesc
