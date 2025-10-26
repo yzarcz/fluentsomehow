@@ -4550,7 +4550,7 @@ ElementsTable.Paragraph = (function()
 	function Paragraph:New(Config)
 		Config.Content = Config.Content or ""
 
-		local Paragraph = Components.Element(Config.Title, Config.Content, true, Paragraph.Container, false, Config)
+		local Paragraph = Components.Element(Config.Title, Config.Content, Paragraph.Container, false, Config)
 		Paragraph.Frame.BackgroundTransparency = 0.92
 		Paragraph.Border.Transparency = 0.6
 
@@ -7490,5 +7490,7 @@ AddSignal(MobileMinimizeButton.MouseButton1Click, function()
 end)
 
 task.wait(0.01)
+
+print("RETURNING:", Library, SaveManager, InterfaceManager, Mobile)
 
 return Library, SaveManager, InterfaceManager, Mobile
