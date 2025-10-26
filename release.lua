@@ -4564,6 +4564,57 @@ ElementsTable.Paragraph = (function()
 
 	return Paragraph
 end)()
+ElementsTable.Divider = (function()
+	local Element = {}
+	Element.__index = Element
+	Element.__type = "Divider"
+	
+	function Element:New()
+		local Divider = {}
+		
+		local layoutOrder = #self.Container:GetChildren()
+		
+		local InnerFrame = New("Frame", {
+			Size = UDim2.new(1, 0, 0, 1),
+			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
+		}, {
+			New("UIStroke", {
+				Transparency = 0.5,
+				Thickness = 1,
+				ThemeTag = {
+					Color = "TitleBarLine",
+				},
+			})
+		})
+		
+		Divider.Frame = New("Frame", {
+			Size = UDim2.new(1, 0, 0, 13),
+			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
+			Parent = self.Container,
+			LayoutOrder = layoutOrder,
+		}, {
+			New("UIListLayout", {
+				SortOrder = Enum.SortOrder.LayoutOrder,
+				VerticalAlignment = Enum.VerticalAlignment.Center,
+			}),
+			New("UIPadding", {
+				PaddingTop = UDim.new(0, 6),
+				PaddingBottom = UDim.new(0, 6),
+			}),
+			InnerFrame
+		})
+		
+		function Divider:Destroy()
+			Divider.Frame:Destroy()
+		end
+		
+		return Divider
+	end
+	
+	return Element
+end)()
 ElementsTable.Slider = (function()
 	local Element = {}
 	Element.__index = Element
@@ -7490,7 +7541,5 @@ AddSignal(MobileMinimizeButton.MouseButton1Click, function()
 end)
 
 task.wait(0.01)
-
-print("RETURNING:", Library, SaveManager, InterfaceManager, Mobile)
 
 return Library, SaveManager, InterfaceManager, Mobile
