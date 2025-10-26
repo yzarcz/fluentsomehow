@@ -1390,6 +1390,7 @@ function Creator.New(Name, Properties, Children)
 	ApplyCustomProps(Object, Properties)
 	return Object
 end
+
 function Creator.SpringMotor(Initial, Instance, Prop, IgnoreDialogCheck, ResetOnThemeChange)
 	IgnoreDialogCheck = IgnoreDialogCheck or false
 	ResetOnThemeChange = ResetOnThemeChange or false
@@ -1744,11 +1745,11 @@ function Acrylic.init()
 	local depthOfFieldDefaults = {}
 
 	function Acrylic.Enable()
-		-- 1
+	-- 1
 	end
 
 	function Acrylic.Disable()
-		-- 2
+	-- 2
 	end
 
 end
@@ -1764,18 +1765,12 @@ local Components = {
 
 Components.Element = (function()
 	local New = Creator.New
+
 	local Spring = Flipper.Spring.new
 
-	return function(Config)
-		Config = Config or {}
+	return function(Title, Desc, Parent, Hover, Options)
 		local Element = {}
-		
-		local Title = Config.Title or ""
-		local Desc = Config.Description or ""
-		local RichText = Config.RichText or false
-		local Parent = Config.Parent
-		local Hover = Config.Hover or false
-		local Options = Config.Options or Config
+		local Options = Options or {}
 
 		Element.TitleLabel = New("TextLabel", {
 			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal),
@@ -1807,27 +1802,22 @@ Components.Element = (function()
 
 		if Options and Options.Icon then
 			local iconImage = Options.Icon
-			if not fischbypass then
-				pcall(function()
-					if Library and Library.GetIcon then
-						local resolved = Library:GetIcon(Options.Icon)
-						if resolved then iconImage = resolved end
-					end
-				end)
-			end
-			
-			if type(iconImage) == "string" and iconImage ~= "" then
-				Element.IconImage = New("ImageLabel", {
-					Image = iconImage,
-					Size = UDim2.fromOffset(16, 16),
-					BackgroundTransparency = 1,
-					LayoutOrder = 1,
-					ThemeTag = {
-						ImageColor3 = "Text",
-					},
-				})
-				Element.IconImage.Parent = Element.Header
-			end
+			pcall(function()
+				if Library and Library.GetIcon then
+					local resolved = Library:GetIcon(Options.Icon)
+					if resolved then iconImage = resolved end
+				end
+			end)
+			Element.IconImage = New("ImageLabel", {
+				Image = iconImage,
+				Size = UDim2.fromOffset(16, 16),
+				BackgroundTransparency = 1,
+				LayoutOrder = 1,
+				ThemeTag = {
+					ImageColor3 = "Text",
+				},
+			})
+			Element.IconImage.Parent = Element.Header
 		end
 
 		Element.TitleLabel.Parent = Element.Header
@@ -1835,7 +1825,7 @@ Components.Element = (function()
 		Element.DescLabel = New("TextLabel", {
 			FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json"),
 			Text = Desc,
-			RichText = RichText,
+			RichText = Options and Options.RichText == true,
 			TextColor3 = Color3.fromRGB(200, 200, 200),
 			TextSize = 12,
 			TextWrapped = true,
@@ -3790,7 +3780,7 @@ ElementsTable.Button = (function()
 		assert(Config.Title, "Button - Missing Title")
 		Config.Callback = Config.Callback or function() end
 
-		local ButtonFrame = Components.Element(Config.Title, Config.Description, false, self.Container, true, Config)
+		local ButtonFrame = Components.Element(Config.Title, Config.Description, self.Container, true, Config)
 
 		local ButtonIco = New("ImageLabel", {
 			Image = "rbxassetid://10709791437",
@@ -3827,7 +3817,7 @@ ElementsTable.Toggle = (function()
 			Type = "Toggle",
 		}
 
-		local ToggleFrame = Components.Element(Config.Title, Config.Description, false, self.Container, true, Config)
+		local ToggleFrame = Components.Element(Config.Title, Config.Description, self.Container, true, Config)
 		ToggleFrame.DescLabel.Size = UDim2.new(1, -54, 0, 14)
 
 		Toggle.SetTitle = ToggleFrame.SetTitle
@@ -3938,7 +3928,7 @@ ElementsTable.Dropdown = (function()
 			Dropdown.Value = {}
 		end
 
-		local DropdownFrame = Components.Element(Config.Title, Config.Description, false, self.Container, false, Config)
+		local DropdownFrame = Components.Element(Config.Title, Config.Description, self.Container, false, Config)
 		DropdownFrame.DescLabel.Size = UDim2.new(1, -170, 0, 14)
 
 		Dropdown.SetTitle = DropdownFrame.SetTitle
@@ -4560,15 +4550,7 @@ ElementsTable.Paragraph = (function()
 	function Paragraph:New(Config)
 		Config.Content = Config.Content or ""
 
-		
-		local Paragraph = Components.Element(
-            Config.Title,
-            Config.Content,
-            (Config.RichText == true),
-            Paragraph.Container,
-            false,
-            Config
-        )
+		local Paragraph = Components.Element(Config.Title, Config.Content, true, Paragraph.Container, false, Config)
 		Paragraph.Frame.BackgroundTransparency = 0.92
 		Paragraph.Border.Transparency = 0.6
 
@@ -4581,57 +4563,6 @@ ElementsTable.Paragraph = (function()
 	end
 
 	return Paragraph
-end)()
-ElementsTable.Divider = (function()
-	local Element = {}
-	Element.__index = Element
-	Element.__type = "Divider"
-	
-	function Element:New()
-		local Divider = {}
-		
-		local layoutOrder = #self.Container:GetChildren()
-		
-		local InnerFrame = New("Frame", {
-			Size = UDim2.new(1, 0, 0, 1),
-			BackgroundTransparency = 1,
-			BorderSizePixel = 0,
-		}, {
-			New("UIStroke", {
-				Transparency = 0.5,
-				Thickness = 1,
-				ThemeTag = {
-					Color = "TitleBarLine",
-				},
-			})
-		})
-		
-		Divider.Frame = New("Frame", {
-			Size = UDim2.new(1, 0, 0, 13),
-			BackgroundTransparency = 1,
-			BorderSizePixel = 0,
-			Parent = self.Container,
-			LayoutOrder = layoutOrder,
-		}, {
-			New("UIListLayout", {
-				SortOrder = Enum.SortOrder.LayoutOrder,
-				VerticalAlignment = Enum.VerticalAlignment.Center,
-			}),
-			New("UIPadding", {
-				PaddingTop = UDim.new(0, 6),
-				PaddingBottom = UDim.new(0, 6),
-			}),
-			InnerFrame
-		})
-		
-		function Divider:Destroy()
-			Divider.Frame:Destroy()
-		end
-		
-		return Divider
-	end
-	
-	return Element
 end)()
 ElementsTable.Slider = (function()
 	local Element = {}
@@ -4656,7 +4587,7 @@ ElementsTable.Slider = (function()
 
 		local Dragging = false
 
-		local SliderFrame = Components.Element(Config.Title, Config.Description, false, self.Container, false, Config)
+		local SliderFrame = Components.Element(Config.Title, Config.Description, self.Container, false, Config)
 		SliderFrame.DescLabel.Size = UDim2.new(1, -170, 0, 14)
 
 		Slider.Elements = SliderFrame
@@ -4784,18 +4715,18 @@ ElementsTable.Slider = (function()
 			if not SliderInput:IsFocused() then
 				SliderDisplay.Visible = false
 				SliderInput.Text = tostring(Slider.Value)
-
+				
 				local targetWidth = calculateInputWidth(tostring(Slider.Value))
 				SliderInput.Size = UDim2.new(0, targetWidth, 0, 14)
 				inputVisible = true
-
+				
 				local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
-
+				
 				TweenService:Create(SliderInput, tweenInfo, {
 					TextTransparency = 0,
 					BackgroundTransparency = 0.8
 				}):Play()
-
+				
 				TweenService:Create(SliderInput.UIStroke, tweenInfo, {
 					Transparency = 0.7
 				}):Play()
@@ -4806,16 +4737,16 @@ ElementsTable.Slider = (function()
 			isHovering = false
 			if not SliderInput:IsFocused() and inputVisible then
 				local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.In)
-
+				
 				TweenService:Create(SliderInput, tweenInfo, {
 					TextTransparency = 1,
 					BackgroundTransparency = 1
 				}):Play()
-
+				
 				TweenService:Create(SliderInput.UIStroke, tweenInfo, {
 					Transparency = 1
 				}):Play()
-
+				
 				task.wait(0.2)
 				SliderDisplay.Visible = true
 				inputVisible = false
@@ -4834,11 +4765,11 @@ ElementsTable.Slider = (function()
 					dotCount = dotCount + 1
 					return dotCount == 1 and "." or ""
 				end)
-
+				
 				if cleanText ~= text then
 					SliderInput.Text = cleanText
 				end
-
+				
 				if SliderInput.Visible then
 					local targetWidth = calculateInputWidth(cleanText)
 					SliderInput.Size = UDim2.new(0, targetWidth, 0, 14)
@@ -4853,19 +4784,19 @@ ElementsTable.Slider = (function()
 			else
 				SliderInput.Text = tostring(Slider.Value)
 			end
-
+			
 			if not isHovering then
 				local tweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.In)
-
+				
 				TweenService:Create(SliderInput, tweenInfo, {
 					TextTransparency = 1,
 					BackgroundTransparency = 1
 				}):Play()
-
+				
 				TweenService:Create(SliderInput.UIStroke, tweenInfo, {
 					Transparency = 1
 				}):Play()
-
+				
 				task.wait(0.2)
 				SliderDisplay.Visible = true
 				inputVisible = false
@@ -4940,7 +4871,7 @@ ElementsTable.Slider = (function()
 			SliderDot.Position = UDim2.new((self.Value - Slider.Min) / (Slider.Max - Slider.Min), -7, 0.5, 0)
 			SliderFill.Size = UDim2.fromScale((self.Value - Slider.Min) / (Slider.Max - Slider.Min), 1)
 			SliderDisplay.Text = tostring(self.Value)
-
+			
 			if SliderInput.Visible then
 				SliderInput.Text = tostring(self.Value)
 				local targetWidth = calculateInputWidth(tostring(self.Value))
@@ -4984,7 +4915,7 @@ ElementsTable.Keybind = (function()
 
 		local Picking = false
 
-		local KeybindFrame = Components.Element(Config.Title, Config.Description, false, self.Container, true)
+		local KeybindFrame = Components.Element(Config.Title, Config.Description, self.Container, true)
 
 		Keybind.SetTitle = KeybindFrame.SetTitle
 		Keybind.SetDesc = KeybindFrame.SetDesc
@@ -5190,7 +5121,7 @@ ElementsTable.Colorpicker = (function()
 
 		Colorpicker:SetHSVFromRGB(Colorpicker.Value)
 
-		local ColorpickerFrame = Components.Element(Config.Title, Config.Description, false, self.Container, true)
+		local ColorpickerFrame = Components.Element(Config.Title, Config.Description, self.Container, true)
 
 		Colorpicker.SetTitle = ColorpickerFrame.SetTitle
 		Colorpicker.SetDesc = ColorpickerFrame.SetDesc
@@ -5686,7 +5617,7 @@ ElementsTable.Input = (function()
 			Type = "Input",
 		}
 
-		local InputFrame = Components.Element(Config.Title, Config.Description, false, self.Container, false)
+		local InputFrame = Components.Element(Config.Title, Config.Description, self.Container, false)
 
 		Input.SetTitle = InputFrame.SetTitle
 		Input.SetDesc = InputFrame.SetDesc
@@ -7559,6 +7490,5 @@ AddSignal(MobileMinimizeButton.MouseButton1Click, function()
 end)
 
 task.wait(0.01)
-
 
 return Library, SaveManager, InterfaceManager, Mobile
