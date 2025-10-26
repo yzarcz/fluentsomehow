@@ -6814,6 +6814,8 @@ local SaveManager = {} do
 
 		local section = tab:AddSection("Configuration", "settings")
 
+		section:AddDivider()
+
 		section:AddInput("SaveManager_ConfigName",    { Title = "Config name" })
 		section:AddDropdown("SaveManager_ConfigList", { Title = "Config list", Values = self:RefreshConfigList(), AllowNull = true })
 
@@ -7003,6 +7005,8 @@ local InterfaceManager = {} do
 				InterfaceManager:SaveSettings()
 			end
 		})
+
+		section:AddDivider()
 
 		InterfaceTheme:SetValue(Settings.Theme)
 
