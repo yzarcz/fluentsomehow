@@ -1423,7 +1423,7 @@ Library.Creator = Creator
 local New = Creator.New
 
 local GUI = New("ScreenGui", {
-	Parent = LocalPlayer:WaitForChild("PlayerGui"),
+	Parent = game:GetService("CoreGui"),
 })
 Library.GUI = GUI
 ProtectGui(GUI)
