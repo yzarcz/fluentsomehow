@@ -59,7 +59,7 @@ local Themes = {
 		"Grape",
 		"Bloody",
 		"Arctic",
-		"Nebula"
+		"NebulaZ"
 	},
 	Dark = {
 		Name = "Dark",
@@ -766,15 +766,12 @@ local Themes = {
 		HoverChange = 0.04
 	}
 
-	Nebula = {
-		Name = "Nebula",
+	NebulaZ = {
+		Name = "NebulaZ",
 		Accent = Color3.fromRGB(255, 26, 141),
 		AcrylicMain = Color3.fromRGB(16, 16, 16),
 		AcrylicBorder = Color3.fromRGB(57, 57, 57),
-		AcrylicGradient = ColorSequence.new{
-			ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 26, 141)),
-			ColorSequenceKeypoint.new(1, Color3.fromRGB(139, 92, 246))
-		},
+		AcrylicGradient = ColorSequence.new(Color3.fromRGB(16, 16, 16), Color3.fromRGB(13, 13, 13)),
 		AcrylicNoise = 0.92,
 		TitleBarLine = Color3.fromRGB(75, 75, 75),
 		Tab = Color3.fromRGB(185, 187, 190),
@@ -806,7 +803,7 @@ local Themes = {
 		SubText = Color3.fromRGB(185, 187, 190),
 		Hover = Color3.fromRGB(255, 90, 184),
 		HoverChange = 0.05,
-	},
+	}
 
 }
 
