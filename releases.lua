@@ -58,7 +58,8 @@ local Themes = {
 		"Cloud",
 		"Grape",
 		"Bloody",
-		"Arctic"
+		"Arctic",
+		"Nebula"
 	},
 	Dark = {
 		Name = "Dark",
@@ -765,6 +766,48 @@ local Themes = {
 		HoverChange = 0.04
 	}
 
+	Nebula = {
+		Name = "Nebula",
+		Accent = Color3.fromRGB(255, 26, 141),
+		AcrylicMain = Color3.fromRGB(16, 16, 16),
+		AcrylicBorder = Color3.fromRGB(57, 57, 57),
+		AcrylicGradient = ColorSequence.new{
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 26, 141)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(139, 92, 246))
+		},
+		AcrylicNoise = 0.92,
+		TitleBarLine = Color3.fromRGB(75, 75, 75),
+		Tab = Color3.fromRGB(185, 187, 190),
+		Element = Color3.fromRGB(35, 35, 35),
+		ElementBorder = Color3.fromRGB(57, 57, 57),
+		InElementBorder = Color3.fromRGB(80, 80, 80),
+		ElementTransparency = 0.85,
+		ToggleSlider = Color3.fromRGB(185, 187, 190),
+		ToggleToggled = Color3.fromRGB(22, 22, 22),
+		SliderRail = Color3.fromRGB(139, 92, 246),
+		DropdownFrame = Color3.fromRGB(185, 187, 190),
+		DropdownHolder = Color3.fromRGB(22, 22, 22),
+		DropdownBorder = Color3.fromRGB(57, 57, 57),
+		DropdownOption = Color3.fromRGB(255, 90, 184),
+		Keybind = Color3.fromRGB(185, 187, 190),
+		Input = Color3.fromRGB(185, 187, 190),
+		InputFocused = Color3.fromRGB(13, 13, 13),
+		InputIndicator = Color3.fromRGB(255, 90, 184),
+		InputIndicatorFocus = Color3.fromRGB(255, 26, 141),
+		Dialog = Color3.fromRGB(22, 22, 22),
+		DialogHolder = Color3.fromRGB(13, 13, 13),
+		DialogHolderLine = Color3.fromRGB(57, 57, 57),
+		DialogButton = Color3.fromRGB(26, 26, 26),
+		DialogButtonBorder = Color3.fromRGB(255, 26, 141),
+		DialogBorder = Color3.fromRGB(139, 92, 246),
+		DialogInput = Color3.fromRGB(22, 22, 22),
+		DialogInputLine = Color3.fromRGB(255, 90, 184),
+		Text = Color3.fromRGB(255, 255, 255),
+		SubText = Color3.fromRGB(185, 187, 190),
+		Hover = Color3.fromRGB(255, 90, 184),
+		HoverChange = 0.05,
+	},
+
 }
 
 local Library = {
@@ -1423,7 +1466,7 @@ Library.Creator = Creator
 local New = Creator.New
 
 local GUI = New("ScreenGui", {
-	Parent = game:GetService("CoreGui"),
+	Parent = LocalPlayer:WaitForChild("PlayerGui"),
 })
 Library.GUI = GUI
 ProtectGui(GUI)
@@ -6085,7 +6128,6 @@ local Icons = {
 	["lucide-film"] = "rbxassetid://10723374981",
 	["lucide-filter"] = "rbxassetid://10723375128",
 	["lucide-fingerprint"] = "rbxassetid://10723375250",
-	["lucide=fish-symbol"] = "rbxassetid://114605049574643",
 	["lucide-flag"] = "rbxassetid://10723375890",
 	["lucide-flag-off"] = "rbxassetid://10723375443",
 	["lucide-flag-triangle-left"] = "rbxassetid://10723375608",
